@@ -1,3 +1,9 @@
+## Links and Addresses
+
+Froggies Faucet [Website Link](https://froggies-faucet.netlify.app/)\
+Froggies Token contract address: "0x49f128399Ee6D41F54516bA4E1bb91D9b9c13e07"\
+Faucet contract address:"0xbf9aa861908CB356C5c90f18C688b56DB9540a59"
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
