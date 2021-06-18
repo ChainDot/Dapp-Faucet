@@ -1,7 +1,7 @@
 import { Alert, AlertIcon } from "@chakra-ui/alert";
 import { Button } from "@chakra-ui/button";
 import { useDisclosure } from "@chakra-ui/hooks";
-import { Text } from "@chakra-ui/layout";
+import { Box, Text } from "@chakra-ui/layout";
 import { Flex, Heading } from "@chakra-ui/layout";
 import {
   Modal,
@@ -19,6 +19,7 @@ import { Web3Context } from "web3-hooks";
 import { FroggiesContext } from "./App";
 import Faucet from "./components/Faucet";
 import Froggies from "./components/Froggies";
+import { ethers } from "ethers";
 
 const Dapp = () => {
   const MY_ADDRESS = "0xB691FFEfd7f4E2c6D636ab89f6168850113fD4E0";
@@ -36,7 +37,7 @@ const Dapp = () => {
   const handleLoginClick = () => {
     return !web3State.isLogged ? login() : "";
   };
-
+  // get Froggies Balance
   useEffect(() => {
     if (froggies) {
       const getBalance = async () => {
@@ -52,7 +53,7 @@ const Dapp = () => {
   }, [setFrgBalance, froggies, web3State.account]);
 
   const handleDonateClick = async () => {
-    const weiAmount = 10 * 10 ** 9;
+    const weiAmount = ethers.utils.parseEther("1");
     try {
       const tx = await web3State.signer.sendTransaction({
         to: MY_ADDRESS,
@@ -81,7 +82,7 @@ const Dapp = () => {
   };
   return (
     <>
-      <Flex direction="column" minH="100vh">
+      <Flex direction="column" minH="100vh" bg="green.100">
         <Modal isOpen={isOpenLogoutModal} onClose={onCloseLogoutModal}>
           <ModalOverlay />
           <ModalContent>
@@ -99,13 +100,29 @@ const Dapp = () => {
           </ModalContent>
         </Modal>
 
-        <Flex justify="space-between" p="2rem" bg="lightgreen">
-          <Heading align="center">Froggies Token & Faucet</Heading>
-          <Flex>
+        <Box p="2rem" bg="green.400">
+          <Flex justify="space-around">
+            <Heading
+              size="lg"
+              align="center"
+              color="green.900"
+              borderWidth="3px"
+              borderColor="green.900"
+              p="5"
+              borderRadius="7"
+            >
+              Froggies Token & Rinkeby Faucet
+            </Heading>
             <Flex direction="column" mx="24px">
-              <Text mb="5px">Account: {web3State.account}</Text>
-              <Text mb="5px">Ether Balance: {web3State.balance} ETH</Text>
-              <Text>Froggies Balance: {frgBalance / 10 ** 18} FRG</Text>
+              <Text mb="5px" color="green.900" fontWeight="bold">
+                Account: {web3State.account}
+              </Text>
+              <Text mb="5px" color="green.900" fontWeight="bold">
+                Ether Balance: {web3State.balance} ETH
+              </Text>
+              <Text mb="5px" color="green.900" fontWeight="bold">
+                Froggies Balance: {frgBalance / 10 ** 18} FRG
+              </Text>
             </Flex>
             <Button
               colorScheme="green"
@@ -116,7 +133,7 @@ const Dapp = () => {
               {!web3State.isLogged ? "Log in" : "Log out"}
             </Button>
           </Flex>
-        </Flex>
+        </Box>
         {!web3State.isLogged ? (
           <Alert>
             <AlertIcon />
@@ -128,8 +145,8 @@ const Dapp = () => {
             You are on the wrong network please switch to Rinkeby
           </Alert>
         ) : (
-          <Flex m="2rem">
-            <Tabs size="lg">
+          <Flex bg="green.100">
+            <Tabs size="lg" colorScheme="green">
               <TabList>
                 <Tab>TOKEN</Tab>
                 <Tab>FAUCET</Tab>
@@ -148,9 +165,9 @@ const Dapp = () => {
         )}
 
         <Flex
-          bg="lightgreen"
+          bg="green.400"
           mt="auto"
-          p="1.5rem"
+          p="1.25rem"
           justify="space-around"
           align="center"
         >
@@ -159,7 +176,7 @@ const Dapp = () => {
           </Text>
           <Flex align="center">
             <Text fontSize="md" fontWeight="bold" px="1rem">
-              I'm poor, support me with 10 Gwei
+              I'm poor support me
             </Text>
             <Button colorScheme="green" onClick={handleDonateClick}>
               Donate

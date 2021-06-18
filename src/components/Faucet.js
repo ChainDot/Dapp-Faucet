@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import { Text } from "@chakra-ui/layout";
+import { Box, Flex, Text } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import React, { useContext, useEffect, useState } from "react";
 import { Web3Context } from "web3-hooks";
@@ -25,24 +25,13 @@ const Faucet = () => {
         isClosable: true,
       });
     } catch (e) {
-      if (e.code === -32603) {
-        toast({
-          title: "Transaction Denied wait",
-          description: e.message,
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-      }
-      if (e.code === 4001) {
-        toast({
-          title: "Transaction signature denied",
-          description: e.message,
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-      }
+      toast({
+        title: "Transaction signature denied",
+        description: e.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
 
       console.error(e);
     } finally {
@@ -57,14 +46,14 @@ const Faucet = () => {
           const tx = await faucet.countdown();
           setCountdown(tx);
         } catch (e) {
-          console.log(e);
+          console.error(e);
         }
       };
       getCountDown();
     }
   }, [faucet]);
 
-  //convert secondes so is more readable
+  //convert secondes H/M/S so is more readable
   function secondsToHms(d) {
     d = Number(d);
     let h = Math.floor(d / 3600);
@@ -79,19 +68,41 @@ const Faucet = () => {
 
   return (
     <>
-      {isLoading ? (
-        <Button isLoading loadingText="Loading" mb="8px" colorScheme="green">
-          get 100 tokens
-        </Button>
-      ) : (
-        <Button mb="8px" colorScheme="green" onClick={handleGetTokensClick}>
-          get 100 tokens
-        </Button>
-      )}
-      <Text>
-        time remaining before you can get more tokens:{" "}
-        {secondsToHms(countdown).toString()}{" "}
-      </Text>
+      <Flex>
+        <Flex
+          direction="column"
+          align="center"
+          justify="center"
+          mt="1.5rem"
+          borderWidth="2px"
+          p="3"
+          borderColor="green.400"
+          borderRadius="10"
+        >
+          <Text fontSize="1.25rem" m="1rem" color="green.600" fontWeight="bold">
+            Get 100 TEST Froggies Token every 3 days
+          </Text>
+          {isLoading ? (
+            <Button
+              isLoading
+              loadingText="Loading"
+              mb="8px"
+              colorScheme="green"
+            >
+              Send Me 100 Froggies
+            </Button>
+          ) : (
+            <Button mb="8px" colorScheme="green" onClick={handleGetTokensClick}>
+              Send
+            </Button>
+          )}
+
+          <Text fontSize="1rem" m="1rem" color="green.600" fontWeight="bold">
+            Time remaining before you can get more tokens:{" "}
+            {secondsToHms(countdown).toString()}{" "}
+          </Text>
+        </Flex>
+      </Flex>
     </>
   );
 };
