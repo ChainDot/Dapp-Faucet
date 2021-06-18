@@ -1,24 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { createContext } from "react";
+import Dapp from "./Dapp";
+import { useContract } from "web3-hooks";
+import { FroggiesAddress, FroggiesAbi } from "./contracts/Froggies";
+import { FaucetAddress, FaucetAbi } from "./contracts/Faucet";
+
+export const FroggiesContext = createContext(null);
+export const FaucetContext = createContext(null);
 
 function App() {
+  const froggies = useContract(FroggiesAddress, FroggiesAbi);
+  const faucet = useContract(FaucetAddress, FaucetAbi);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <FroggiesContext.Provider value={froggies}>
+      <FaucetContext.Provider value={faucet}>
+        <Dapp />
+      </FaucetContext.Provider>
+    </FroggiesContext.Provider>
   );
 }
 
