@@ -113,17 +113,25 @@ const Dapp = () => {
             >
               Froggies Token & Rinkeby Faucet
             </Heading>
-            <Flex direction="column" mx="24px">
+
+            {!web3State.isLogged ? (
               <Text mb="5px" color="green.900" fontWeight="bold">
-                Account: {web3State.account}
+                You need to login first.
               </Text>
-              <Text mb="5px" color="green.900" fontWeight="bold">
-                Ether Balance: {web3State.balance} ETH
-              </Text>
-              <Text mb="5px" color="green.900" fontWeight="bold">
-                Froggies Balance: {frgBalance / 10 ** 18} FRG
-              </Text>
-            </Flex>
+            ) : (
+              <Flex direction="column" mx="24px">
+                <Text mb="5px" color="green.900" fontWeight="bold">
+                  Account: {web3State.account}
+                </Text>
+                <Text mb="5px" color="green.900" fontWeight="bold">
+                  Ether Balance: {web3State.balance} ETH
+                </Text>
+                <Text mb="5px" color="green.900" fontWeight="bold">
+                  Froggies Balance: {frgBalance / 10 ** 18} FRG
+                </Text>
+              </Flex>
+            )}
+
             <Button
               colorScheme="green"
               onClick={() =>
