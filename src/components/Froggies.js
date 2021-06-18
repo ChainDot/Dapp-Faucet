@@ -5,7 +5,7 @@ import { Flex } from "@chakra-ui/layout";
 import { Text } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Web3Context } from "web3-hooks";
 import { FroggiesContext } from "../App";
 

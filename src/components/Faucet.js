@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import { Box, Flex, Text } from "@chakra-ui/layout";
+import { Flex, Text } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import React, { useContext, useEffect, useState } from "react";
 import { Web3Context } from "web3-hooks";
